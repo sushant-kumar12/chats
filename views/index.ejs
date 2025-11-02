@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Chats</title>
+</head>
+<body>
+    <h2>All Chats!</h2>
+    <br>
+    <form action="/chats/new" method="get">
+        <button>New Chat</button>
+    </form>
+    <br>
+
+    <% for(let chats of allChats)  { %> 
+     <div class="chat">
+        <p>From : <%= chats.from %></p>
+        <div class="msg">
+            <p><%= chats.chat %></p>
+        </div>
+        <p>Received by <%= chats.to %></p>
+        <p><%= chats.created_at.toString().split(" ")[4] %></p>
+        <p><%= chats.created_at.toString().split(" ").slice(0,4).join(" ") %></p>
+     </div>
+     <div style="display: flex; gap: 10px;">
+        <form action="/chats/<%= chats._id %>/edit" method="get">
+            <button type="submit">Edit</button>
+        </form>
+        <form action="/chats/<%= chats._id %>?_method=DELETE" method="post" onsubmit="confirmDelete(event)">
+            <button type="submit">Delete</button>
+        </form>
+    </div>
+     <hr>
+     <% } %>
+
+     <script>
+        function confirmDelete(event) {
+            const confirmed = confirm("Are you sure you want to delete this chat?");
+            if (!confirmed) {
+            event.preventDefault(); // stop form from submitting
+            }
+        }
+    </script>
+
+</body>
+</html>
