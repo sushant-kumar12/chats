@@ -17,11 +17,7 @@ async function main() {
 
 main().then(() => console.log("successfully connected"))
 .catch(err => console.log(err));
-
-app.get("/" , (req,res) => {
-  res.send("successfully routed");
-})
-
+      
 app.get("/chats", async (req,res) => {
   let allChats = await Chat.find();
   res.render("index.ejs", {allChats});
